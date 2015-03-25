@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+	<div id="top" />
+	<div class="menuTopo">
+		<fieldset>
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h:graphicImage value="imagens/usuarios/#{loginBean.perfilLogado.foto}"
+						id="fotoUsuario" />
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h:form>
+						<div class="divider" />
+						<p:commandLink styleClass="btn btn-lg" actionListener="#{jsfUtils.redirectComScrollPorTag}" value="INICIAL">
+							<f:param name="pagina" value="../public/home.xhtml" />
+							<f:param name="idTag" value="scrollHere" />
+						</p:commandLink>
+						<div class="divider" />
+						<p:commandLink styleClass="btn btn-lg" actionListener="#{jsfUtils.redirectComScrollPorTag}" value="MEUS TREINOS">
+							<f:param name="pagina" value="../public/trainingPanel.xhtml" />
+							<f:param name="idTag" value="scrollHere" />
+						</p:commandLink>
+						<div class="divider" />
+						<p:commandLink styleClass="btn btn-lg" value="INSTRUTOR" actionListener="#{jsfUtils.redirectComScrollPorTag}" rendered="#{permissoesBean.isInstructor(loginBean.usuarioLogado.permissoes) eq 'true'}">
+							<f:param name="pagina" value="../instructor/instructorPanel.xhtml" />
+							<f:param name="idTag" value="scrollHere" />
+						</p:commandLink>
+						<div class="divider" />
+						<p:commandLink styleClass="btn btn-lg"
+							actionListener="#{jsfUtils.redirectComScrollPorTag}"
+							value="ADMINISTRADOR" rendered="#{permissoesBean.isAdmin(loginBean.usuarioLogado.permissoes) eq 'true'}">
+							<f:param name="pagina" value="../admin/adminPanel.xhtml" />
+							<f:param name="idTag" value="scrollHere" />
+						</p:commandLink>
+					</h:form>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h2>Bem vindo(a) #{loginBean.perfilLogado.nome} #{loginBean.perfilLogado.sobreNome}</h2>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<p:graphicImage name="/img/sistema/menuTopoArte.png"
+					id="menuTopoArte" />
+			</div>
+		</fieldset>
+	</div>
+
+
+</ui:composition>
+
+</html>

@@ -1,0 +1,11 @@
+.messages{
+	font-family: 'Raleway';
+	color: red;
+	font-weight: bold;
+}
+
+.infoMessages{
+	font-family: 'Raleway';
+	color: green;
+	font-weight: bold;
+}

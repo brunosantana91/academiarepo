@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:component-scan base-package="br.com.academia.persistencia.impl" />
+	<context:annotation-config />
+
+
+	<!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="user" value="root" />
+		<property name="password" value="mysqlroot" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/academia" />
+		<property name="maxPoolSize" value="30" />
+		<property name="acquireIncrement" value="1" />
+		<property name="maxIdleTime" value="120" />
+		<property name="acquireRetryAttempts" value="10" />
+		<property name="initialPoolSize" value="1" />
+	</bean> -->
+
+	
+	<bean class="java.net.URI" id="dbUrl">
+    	<constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
+	</bean>
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
+    <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+    <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+</bean>
+
+
+
+	<bean id="sessionFactory" name="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="br.com.academia.entidades" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+
+	</bean>
+
+
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+</beans>

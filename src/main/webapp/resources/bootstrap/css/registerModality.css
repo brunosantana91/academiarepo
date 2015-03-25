@@ -1,0 +1,14 @@
+.messages{
+	font-family: 'Raleway';
+	color: red;
+	font-weight: bold;
+}
+
+.ui-panel{
+	border-radius: 0;
+}
+
+.ui-panel .ui-panel-titlebar{
+	border-radius: 0;
+	font-family: 'Raleway';
+}

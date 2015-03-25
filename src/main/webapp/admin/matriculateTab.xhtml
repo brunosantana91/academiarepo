@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+		<h:outputStylesheet library="bootstrap/css" name="matriculateTab.css" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<a id="scrollHere" />
+		<section>
+
+		<div class="row">
+			<f:event type="preRenderView"
+				listener="#{matriculaBean.buscaDadosMatricula}" />
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<div class="page-header">
+					<h2>
+						matrícula #{matriculaBean.modalidadeEscolhida.nome} <small>#{matriculaBean.opcaoEscolhida.diasSemana.size()}
+							dia(s) por semana</small>
+					</h2>
+				</div>
+			</div>
+		</div>
+		<h:form id="frmMatricula">
+		
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<p:contextMenu for="tblAlunos">
+						<p:menuitem value="matricular" icon="ui-icon-contact"
+							oncomplete="PF('dlgConfirmaMatricula').show()"
+							update="panelConfirmaMatricula">
+							<f:setPropertyActionListener target="#{matriculaBean.modalidadeEscolhidaTab}" value="#{matriculaBean.modalidadeEscolhida}" />
+							<f:setPropertyActionListener target="#{matriculaBean.opcaoEscolhidaTab}" value="#{matriculaBean.opcaoEscolhida}" />
+							</p:menuitem>
+					</p:contextMenu>
+					<h:messages id="messages" styleClass="messages"/>
+					<p:dataTable id="tblAlunos" var="aluno"
+						value="#{matriculaBean.alunosDisponiveis}" rowKey="#{aluno.id}"
+						selection="#{matriculaBean.alunoEscolhido}" selectionMode="single"
+						emptyMessage="Nenhum perfil cadastrado"
+						filteredValue="#{matriculaBean.alunosFiltrados}">
+					
+						<f:facet name="header">
+						Click com o botão direito para selecionar
+					</f:facet>
+						<p:column headerText="nome completo"
+							filterBy="#{aluno.nome} #{aluno.sobreNome}"
+							filterMatchMode="contains">
+							<h:outputText value="#{aluno.nome} #{aluno.sobreNome}" />
+						</p:column>
+						<p:column headerText="RG" filterBy="#{aluno.rg}"
+							filterMatchMode="contains">
+							<h:outputText value="#{aluno.rg}">
+								<f:converter binding="#{rgConverter}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="CPF" filterBy="#{aluno.cpf}"
+							filterMatchMode="contains">
+							<h:outputText value="#{aluno.cpf}">
+								<f:converter binding="#{cpfConverter}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="data de nascimento">
+							<h:outputText value="#{aluno.dataNascimento.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<f:facet name="footer">
+						Utilize apenas números para filtrar por RG ou CPF
+					</f:facet>
+					</p:dataTable>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<p:dialog id="dlgConfirmaMatricula"
+						widgetVar="dlgConfirmaMatricula" header="Confirmação de matrícula"
+						global="true" showEffect="fade" hideEffect="fade"
+						closeOnEscape="false" icon="none" closable="false">
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered">
+								<p:panel id="panelConfirmaMatricula">
+								Tem certeza ? Você está prestes a matricular o aluno <span style="font-size:1.4em;">#{matriculaBean.alunoEscolhido.nome} #{matriculaBean.alunoEscolhido.sobreNome}</span> na modalidade <span style="font-size: 1.4em;">#{matriculaBean.modalidadeEscolhidaTab.nome}</span>.
+								
+						
+					
+								<div class="row">
+										<div
+											class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-centered">
+											<p:commandButton value="SIM"
+												action="#{matriculaBean.matricular}"
+												styleClass="ui-confirmDialog-yes" icon="ui-icon-check" ajax="false"/>
+											<p:commandButton value="NÃO"
+												oncomplete="PF('dlgConfirmaMatricula').hide()"
+												styleClass="ui-confirmDialog-no" icon="ui-icon-close" ajax="false" action="/admin/adminPanel.xhtml?faces-redirect=true"/>
+										</div>
+									</div>
+								</p:panel>
+							</div>
+						</div>
+					</p:dialog>
+				</div>
+			</div>
+
+		</h:form> </section>
+	</ui:define>
+</ui:composition>
+
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+		<h:outputStylesheet library="bootstrap/css" name="trainingPanel.css" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<f:event type="preRenderView"
+				listener="#{treinamentosBean.buscaDadosTreinoMaximizado}" />
+		<a id="scrollHere" />
+		<section> 
+		<div class="row">
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<div class="page-header">
+						<h2>#{treinamentosBean.treinoEscolhido.nome}</h2>
+					</div>
+				</div>
+			</div>
+		<br/>
+		<p:dataTable id="tblExercicios"
+			value="#{treinamentosBean.treinoEscolhido.exercicios}"
+			var="exercicio" resizableColumns="true" emptyMessage="Nenhum exercício">
+			<p:column headerText="DOMINGO">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosDomingo.contains(exercicio)}" />
+			</p:column>
+			<p:column headerText="SEGUNDA-FEIRA">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosSegunda.contains(exercicio)}" />
+			</p:column>
+			<p:column headerText="TERÇA-FEIRA">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosTerca.contains(exercicio)}" />
+			</p:column>
+			<p:column headerText="QUARTA-FEIRA">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosQuarta.contains(exercicio)}" />
+			</p:column>
+			<p:column headerText="QUINTA-FEIRA">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosQuinta.contains(exercicio)}" />
+			</p:column>
+			<p:column headerText="SEXTA-FEIRA">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosSexta.contains(exercicio)}" />
+			</p:column>
+			<p:column headerText="SÁBADO">
+				<h:outputText value="#{exercicio.nome} | #{exercicio.descricao}"
+					rendered="#{treinamentosBean.exerciciosSabado.contains(exercicio)}" />
+			</p:column>
+		</p:dataTable> </section>
+	</ui:define>
+
+</ui:composition>
+
+</html>

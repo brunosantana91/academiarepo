@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+
+	</ui:define>
+
+	<ui:define name="conteudo">
+	<h:messages styleClass="messages"/>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<p:dialog id="dlgCadastro" header="GYMMy diz: Selecione uma opção"
+					widgetVar="dlgCadastro" showEffect="fade" hideEffect="fade">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered">
+							<h:form>
+
+								<p:commandLink value="NOVO USUÁRIO"
+									actionListener="#{jsfUtils.redirectComScrollPorTag}"
+									styleClass="btn btn-lg">
+									<f:param name="pagina" value="../admin/registerUser.xhtml" />
+									<f:param name="idTag" value="scrollHere" />
+								</p:commandLink>
+								<div class="divider" />
+								<p:commandLink value="NOVA MODALIDADE" styleClass="btn btn-lg"
+									actionListener="#{jsfUtils.redirectComScrollPorTag}">
+									<f:param name="pagina" value="../admin/registerModality.xhtml" />
+									<f:param name="idTag" value="scrollHere" />
+								</p:commandLink>
+							</h:form>
+						</div>
+					</div>
+				</p:dialog>
+			</div>
+		</div>
+		<a id="scrollHere"/>
+		<p:accordionPanel activeIndex="-1">
+			<p:tab title="ADMINISTRADOR - Painel de administração">
+				<h:panelGrid width="100%">
+
+					<div class="row">
+
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<h:form>
+
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<p:commandLink styleClass="btn btn-lg" value="CADASTRAR"
+										oncomplete="PF('dlgCadastro').show()" style="width:100%" />
+								</div>
+
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<p:commandLink styleClass="btn btn-lg" actionListener="#{jsfUtils.redirectComScrollPorTag}" value="MATRICULAR" style="width:100%">
+										<f:param name="pagina" value="../admin/matriculate.xhtml" />
+										<f:param name="idTag" value="scrollHere" />
+									</p:commandLink>
+								</div>
+
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<p:commandLink styleClass="btn btn-lg" actionListener="#{jsfUtils.redirectComScrollPorTag}" value="PAGAMENTOS" style="width:100%" >
+										<f:param name="pagina" value="../admin/payments.xhtml" />
+										<f:param name="idTag" value="scrollHere" />
+									</p:commandLink>
+								</div>
+
+							</h:form>
+						</div>
+					</div>
+
+				</h:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

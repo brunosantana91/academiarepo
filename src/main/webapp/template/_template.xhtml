@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+	  xmlns:o="http://omnifaces.org/ui"
+	  xmlns:of="http://omnifaces.org/functions"
+	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet library="bootstrap/css" name="bootstrap.css" />
+	<h:outputStylesheet library="bootstrap/css" name="fontes-externas.css" />
+	<h:outputStylesheet library="bootstrap/css" name="_template.css"/>
+	<ui:insert name="cssImports"></ui:insert>
+</h:head> 
+
+<h:body> 
+	<div class="container">
+	<header>
+		<div class="row">
+			<h1>
+				GYMMy <small>1.0</small>
+			</h1>
+		</div>
+	</header>
+		
+		<div id="conteudo">
+			<ui:include src="/template/_topMenu.xhtml" />
+			<ui:insert name="conteudo">
+				
+			</ui:insert>
+		</div>
+		
+		<br/>
+	
+	<footer>
+		<div style="text-align: center" id="rodape">
+			copyright 2015 - GYMMy RnRMachine software
+		</div>
+	</footer>
+</div>
+
+</h:body> 
+</html>

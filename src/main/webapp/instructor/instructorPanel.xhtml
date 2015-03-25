@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<a id="scrollHere"/>
+		<p:accordionPanel activeIndex="-1">
+			<p:tab title="INSTRUTOR - Painel do instrutor">
+				<h:panelGrid width="100%">
+
+					<div class="row">
+
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<h:form>
+
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<p:commandLink styleClass="btn btn-lg" actionListener="#{jsfUtils.redirectComScrollPorTag}" value="CRIAR TREINO" style="width:100%">
+										<f:param name="pagina" value="../instructor/trainingCreation.xhtml" />
+										<f:param name="idTag" value="scrollHere" />
+									</p:commandLink>
+								</div>
+
+							</h:form>
+						</div>
+					</div>
+
+				</h:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

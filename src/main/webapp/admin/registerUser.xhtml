@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:stella="http://stella.caelum.com.br/faces2">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+		<h:outputStylesheet library="bootstrap/css" name="registerUser.css" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<a id="scrollHere" />
+		<section>
+
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<div class="page-header">
+					<h2>
+						CADASTRO DE USUÁRIO <small>* indica campos obrigatórios</small>
+					</h2>
+				</div>
+			</div>
+		</div>
+
+		<fieldset>
+			<div class="row">
+
+				<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-centered">
+
+					<h:form id="frmCadastrarUsuario">
+						<f:event type="postValidate"
+							listener="#{cadastroUsuarioBean.postValidate}" />
+						<div class="row">
+							<div class="form-group">
+								Nome *
+								<p:inputText id="inputNome"
+									value="#{cadastroUsuarioBean.perfil.nome}"
+									styleClass="form-control input-md"
+									validatorMessage="min 2, máx 32">
+									<f:validateLength minimum="2" maximum="32" />
+									<f:ajax event="blur" render="msgInputNome" />
+								</p:inputText>
+								<h:message id="msgInputNome" for="inputNome"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Sobrenome *
+								<p:inputText id="inputSobrenome"
+									value="#{cadastroUsuarioBean.perfil.sobreNome}"
+									styleClass="form-control input-md"
+									validatorMessage="min 2, máx 32">
+									<f:validateLength minimum="2" maximum="32" />
+									<f:ajax event="blur" render="msgInputSobrenome" />
+								</p:inputText>
+								<h:message id="msgInputSobrenome" for="inputSobrenome"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								CPF * (apenas números)
+								<p:inputMask id="inputCpf"
+									value="#{cadastroUsuarioBean.perfil.cpf}"
+									styleClass="form-control input-md" mask="999.999.999-99"
+									validatorMessage="cpf inválido"
+									converterMessage="11 dígitos">
+									<f:converter converterId="inputMaskConverter" />
+									<f:validateRegex pattern="^(0|[0-9][0-9]*)$" />
+									<f:validateLength minimum="11" maximum="11" />
+									<stella:validateCPF />
+									<f:validator binding="#{cpfEmUsoValidator}" />
+									<f:ajax event="blur" render="msgInputCpf" />
+								</p:inputMask>
+								<h:message id="msgInputCpf" for="inputCpf" styleClass="messages" />
+							</div>
+							<div class="form-group">
+								RG * (apenas números)
+								<p:inputMask id="inputRg"
+									value="#{cadastroUsuarioBean.perfil.rg}"
+									styleClass="form-control input-md" mask="99.999.999-9"
+									validatorMessage="9 digitos"
+									converterMessage="9 dígitos">
+									<f:converter converterId="inputMaskConverter" />
+									<f:validateLength minimum="9" maximum="9" />
+									<f:validateRegex pattern="^(0|[0-9][0-9]*)$" />
+									<f:validator binding="#{rgEmUsoValidator}" />
+									<f:ajax event="blur" render="msgInputRg" />
+								</p:inputMask>
+								<h:message id="msgInputRg" for="inputRg" styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Data de nascimento*<br />
+								<p:inputMask id="inputData"
+									value="#{cadastroUsuarioBean.perfil.dataNascimento.time}"
+									mask="99/99/9999" styleClass="form-control input-md"
+									validatorMessage="data inválida"
+									converterMessage="data inválida">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:ajax event="blur" render="msgInputData" />
+								</p:inputMask>
+								<h:message id="msgInputData" for="inputData"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								E-mail *
+								<p:inputText id="inputEmail"
+									value="#{cadastroUsuarioBean.perfil.email}"
+									styleClass="form-control input-md"
+									validatorMessage="e-mail inválido">
+									<f:validator binding="#{emailEmUsoValidator}" />
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									<f:ajax event="blur" render="msgInputEmail" />
+								</p:inputText>
+								<h:message id="msgInputEmail" for="inputEmail"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Telefone *
+								<p:inputMask id="inputTelefone"
+									value="#{cadastroUsuarioBean.perfil.telefone}"
+									styleClass="form-control input-md" mask="(99) 9999-9999"
+									validatorMessage="10 dígitos"
+									converterMessage="10 dígitos">
+									<f:converter converterId="inputMaskConverter" />
+									<f:validateLength minimum="10" maximum="10" />
+									<f:validateRegex pattern="^(0|[0-9][0-9]*)$" />
+									<f:ajax event="blur" render="msgInputTelefone" />
+								</p:inputMask>
+								<h:message id="msgInputTelefone" for="inputTelefone"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Celular
+								<p:inputMask id="inputCelular"
+									value="#{cadastroUsuarioBean.perfil.celular}"
+									styleClass="form-control input-md" mask="(99) 99999-9999"
+									converterMessage="11 dígitos"
+									validatorMessage="11 dígitos">
+									<f:converter converterId="inputMaskConverter" />
+									<f:validateLength minimum="0" maximum="11" />
+									<f:ajax event="blur" render="msgInputCelular" />
+								</p:inputMask>
+								<h:message id="msgInputCelular" for="inputCelular"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Logradouro *
+								<p:inputText id="inputLogradouro"
+									value="#{cadastroUsuarioBean.perfil.endereco.logradouro}"
+									styleClass="form-control input-md"
+									validatorMessage="min 2, máx 64">
+									<f:validateLength minimum="2" maximum="64" />
+									<f:ajax event="blur" render="msgInputLogradouro" />
+								</p:inputText>
+								<h:message id="msgInputLogradouro" for="inputLogradouro"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Bairro *
+								<p:inputText id="inputBairro"
+									value="#{cadastroUsuarioBean.perfil.endereco.bairro}"
+									styleClass="form-control input-md"
+									validatorMessage="min 2, máx 32">
+									<f:validateLength minimum="2" maximum="32" />
+									<f:ajax event="blur" render="msgInputBairro" />
+								</p:inputText>
+								<h:message id="msgInputBairro" for="inputBairro"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								CEP *
+								<p:inputMask id="inputCep"
+									value="#{cadastroUsuarioBean.perfil.endereco.cep}"
+									styleClass="form-control input-md" validatorMessage="8 dígitos"
+									mask="99999-999" converterMessage="8 dígitos">
+									<f:converter converterId="inputMaskConverter" />
+									<f:validateLength minimum="8" maximum="8" />
+									<f:ajax event="blur" render="msgInputCep" />
+								</p:inputMask>
+								<h:message id="msgInputCep" for="inputCep" styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Cidade *
+								<p:inputText id="inputCidade"
+									value="#{cadastroUsuarioBean.perfil.endereco.cidade}"
+									styleClass="form-control input-md"
+									validatorMessage="min 2, máx 32">
+									<f:validateLength minimum="2" maximum="32" />
+									<f:ajax event="blur" render="msgInputCidade" />
+								</p:inputText>
+								<h:message id="msgInputCidade" for="inputCidade"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								UF *
+								<h:selectOneMenu id="inputUf"
+									value="#{cadastroUsuarioBean.perfil.endereco.uf}" styleClass="form-control input-md" required="true"
+									requiredMessage="selecione um estado"
+									converter="omnifaces.GenericEnumConverter">
+									<f:validator validatorId="ufValidator"/> 
+									<f:selectItem itemLabel="Selecione um estado" itemValue="#{null}"/>
+									<f:selectItems
+										value="#{cadastroUsuarioBean.ufs}"
+										itemValue="#{uf}" var="uf"
+										itemLabel="#{uf} - #{uf.valor}" />
+										<f:ajax event="blur" render="msgInputUf" />
+								</h:selectOneMenu>
+								<h:message id="msgInputUf" for="inputUf" styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Altura * (metros)
+								<p:inputMask id="inputAltura"
+									value="#{cadastroUsuarioBean.perfil.altura}"
+									styleClass="form-control input-md" mask="9,99"
+									converterMessage="altura inválida"
+									validatorMessage="altura inválida">
+									<f:converter converterId="inputMaskConverter" />
+									<f:validateDoubleRange minimum="0.50" maximum="5.00" />
+									<f:ajax event="blur" render="msgInputAltura" />
+								</p:inputMask>
+								<h:message id="msgInputAltura" for="inputAltura"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Peso * (Kilogramas)
+								<p:inputText id="inputPeso"
+									value="#{cadastroUsuarioBean.perfil.peso}"
+									styleClass="form-control input-md"
+									converterMessage="peso inválido"
+									validatorMessage="peso inválido">
+									<f:convertNumber minFractionDigits="2" maxFractionDigits="2"
+										minIntegerDigits="1" maxIntegerDigits="3" pattern="##0,00" />
+									<f:validateDoubleRange minimum="10.00" maximum="700.00" />
+									<f:ajax event="blur" render="msgInputPeso" />
+								</p:inputText>
+								<h:message id="msgInputPeso" for="inputPeso"
+									styleClass="messages" />
+							</div>
+
+							<div class="form-group">
+								Foto (clique ou arraste)
+								<p:fileUpload id="inputFotoUpload"
+									fileUploadListener="#{cadastroUsuarioBean.fotoUpload}"
+									label="Upload" mode="advanced" update="msgInputFotoUpload"
+									fileLimit="1" fileLimitMessage="arquivo já carregado"
+									dragDropSupport="true" sizeLimit="300000"
+									invalidSizeMessage="limite 300 Kb"
+									invalidFileMessage="apenas jpeg/png" showButtons="false"
+									auto="true" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+							</div>
+							<h:message id="msgInputFotoUpload" for="inputFotoUpload"
+								infoClass="infoMessages" errorClass="messages" />
+
+							<div class="form-group">
+								Tipo de usuário *
+								<p:selectManyMenu
+									value="#{cadastroUsuarioBean.permissoesSelecionadas}"
+									id="inputTipo" required="true"
+									requiredMessage="selecione ao menos um"
+									converter="omnifaces.GenericEnumConverter">
+									<f:selectItems
+										value="#{cadastroUsuarioBean.permissoesDisponiveis}"
+										itemValue="#{permissao}" var="permissao"
+										itemLabel="#{permissao.valor}" />
+								</p:selectManyMenu>
+								<h:message id="msgInputTipo" for="inputTipo"
+									styleClass="messages" />
+							</div>
+						</div>
+						<div class="row">
+
+							<div class="col-xs-12 text-center">
+								<h:commandButton styleClass="btn btn-default btn-lg"
+									ajax="false" value="CADASTRAR"
+									action="#{cadastroUsuarioBean.cadastrar}" />
+							</div>
+						</div>
+
+
+
+					</h:form>
+				</div>
+
+
+			</div>
+		</fieldset>
+		</section>
+	</ui:define>
+
+</ui:composition>
+
+</html>

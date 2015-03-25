@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+		<h:outputStylesheet library="bootstrap/css" name="trainingPanel.css" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<a id="scrollHere" />
+		<section> 
+		<p:accordionPanel activeIndex="-1">
+			<p:tab
+				title="MEUS TREINOS - se organize, crie treinos específicos e melhore seu rendimento">
+				<p:panel>
+					<fieldset>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h:form id="frmTrainingPanel">
+
+									<p:growl id="messages" />
+
+									<h:commandButton id="btnNovo" styleClass="btn btn-lg"
+										action="#{treinamentosBean.criarTreino}" value="NOVO"
+										disabled="#{treinamentosBean.modalidadeEscolhida eq null}" />
+
+									<div class="divider" />
+									<h:commandButton id="btnExcluir" styleClass="btn btn-lg"
+										actionListener="#{jsfUtils.redirectComScrollPorTag}"
+										value="EXCLUIR"
+										disabled="#{treinamentosBean.treinoEscolhido eq null}">
+										<f:param name="pagina" value="../public/home.xhtml" />
+										<f:param name="idTag" value="scrollHere" />
+									</h:commandButton>
+
+									<div class="divider" />
+									<p:selectOneMenu id="inputModalidade" required="true"
+										requiredMessage="selecione uma modalidade"
+										style="position:absolute; top:2px;"
+										value="#{treinamentosBean.modalidadeEscolhida}"
+										valueChangeListener="#{treinamentosBean.onChangeModalidade}">
+										<f:converter binding="#{modalidadeConverter}" />
+										<f:selectItem itemValue="#{null}"
+											itemLabel="Selecione a modalidade" noSelectionOption="true"
+											itemDisabled="true" />
+										<f:selectItems value="#{treinamentosBean.modalidades}" />
+										<p:ajax event="valueChange" update="btnNovo tblTreinos" />
+									</p:selectOneMenu>
+
+									<p:separator />
+
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+													
+											<p:dataTable var="treinoEscolhido"
+												value="#{treinamentosBean.treinosEspecificos}"
+												id="tblTreinos"
+												emptyMessage="Nenhum treino para essa modalidade."
+												rowExpandMode="single" rowKey="#{treinoEscolhido}"
+												editable="true" editMode="cell">
+
+												<p:ajax event="cellEdit"
+													listener="#{treinamentosBean.onCellEditNomeTreino}"
+													update=":j_idt32:frmTrainingPanel:messages,tblTreinos" />
+												<p:ajax event="rowToggle"
+													listener="#{treinamentosBean.onRowToggle}"
+													update=":j_idt32:frmTrainingPanel:btnExcluir, tblTreinos, tblDomingo, tblSegunda, tblTerca, tblQuarta, tblQuinta, tblSexta, tblSabado" />
+										
+
+
+												<f:facet name="header">
+										treinos de #{treinamentosBean.modalidadeEscolhida.nome.toString().toUpperCase()}
+												</f:facet>
+												<p:column style="width:36px">
+													<p:rowToggler />
+												</p:column>
+												<p:column headerText="Click no nome para alterá-lo">
+													<p:cellEditor>
+														<f:facet name="output">
+															<p style="font-size: 1.8em; text-align: center">#{treinoEscolhido.nome}</p>
+														</f:facet>
+														<f:facet name="input">
+															<p:inputText value="#{treinoEscolhido.nome}"
+																style="width:96%; font-size:1.8em;" />
+														</f:facet>
+													</p:cellEditor>
+												</p:column>
+
+												<p:rowExpansion>
+
+													<div class="row">
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+																<p:dataTable id="tblDomingo"
+																	value="#{treinamentosBean.exerciciosDomingo}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirDomingo}">
+																	<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblDomingo, :j_idt32:frmTrainingPanel:messages"/>
+																		
+																		<!-- <p:ajax event="rowSelectRadio" listener="#{treinamentosBean.onRowSelectExcluirDomingo}"/> -->
+																		
+																		<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+																	
+																	<p:column headerText="DOMINGO">
+																	
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="DOMINGO" />
+																		</p:commandButton>
+																		<br/> <br/>
+																		<p:commandButton value="- remover" action="#{treinamentosBean.excluirExercicioDomingo}" update="tblDomingo" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"
+																id="divSegunda">
+																<p:dataTable id="tblSegunda"
+																	value="#{treinamentosBean.exerciciosSegunda}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirSegunda}">
+																	
+																	
+																	
+																	<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblSegunda, :j_idt32:frmTrainingPanel:messages" />
+																	
+																	<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+																	
+																	<p:column headerText="SEGUNDA">
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="SEGUNDAFEIRA" />
+																		</p:commandButton>
+																						<br/> <br/>
+																		<p:commandButton value="- remover" action="#{treinamentosBean.excluirExercicioSegunda}" update="tblSegunda" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"
+																id="divTerca">
+																<p:dataTable id="tblTerca"
+																	value="#{treinamentosBean.exerciciosTerca}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirTerca}">
+																	<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblTerca, :j_idt32:frmTrainingPanel:messages" />
+																		<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+																	<p:column headerText="TERÇA">
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="TERCAFEIRA" />
+																		</p:commandButton>
+																						<br/> <br/>
+																		<p:commandButton value="- remover" action="#{treinamentosBean.excluirExercicioTerca}" update="tblTerca" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"
+																id="divQuarta">
+																<p:dataTable id="tblQuarta"
+																	value="#{treinamentosBean.exerciciosQuarta}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirQuarta}">
+																	
+																<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblQuarta, :j_idt32:frmTrainingPanel:messages" />
+																
+																	<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+
+																	<p:column headerText="QUARTA">
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="QUARTAFEIRA" />
+																		</p:commandButton>
+																						<br/> <br/>
+																		<p:commandButton id="btnExcluirExercicioQuarta" value="- remover" action="#{treinamentosBean.excluirExercicioQuarta}" update="tblQuarta" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"
+																id="divQuinta">
+																<p:dataTable id="tblQuinta"
+																	value="#{treinamentosBean.exerciciosQuinta}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirQuinta}">
+																	<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblQuinta, :j_idt32:frmTrainingPanel:messages" />
+																		<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+																	<p:column headerText="QUINTA">
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="QUINTAFEIRA" />
+																		</p:commandButton>
+																						<br/> <br/>
+																		<p:commandButton value="- remover" action="#{treinamentosBean.excluirExercicioQuinta}" update="tblQuinta" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"
+																id="divSexta">
+																<p:dataTable id="tblSexta"
+																	value="#{treinamentosBean.exerciciosSexta}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirSexta}">
+																	<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblSexta, :j_idt32:frmTrainingPanel:messages" />
+																		<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+																	<p:column headerText="SEXTA">
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="SEXTAFEIRA" />
+																		</p:commandButton>
+																						<br/> <br/>
+																		<p:commandButton value="- remover" action="#{treinamentosBean.excluirExercicioSexta}" update="tblSexta" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"
+																id="divSabado">
+																<p:dataTable id="tblSabado"
+																	value="#{treinamentosBean.exerciciosSabado}"
+																	var="exercicio" emptyMessage="descanso" editable="true"
+																	editMode="cell" rowKey="#{exercicio}"
+																	selection="#{treinamentosBean.exercicioExcluirSabado}">
+																	<p:ajax event="cellEdit"
+																		listener="#{treinamentosBean.onCellEditExercicio}"
+																		update="tblSabado :j_idt32:frmTrainingPanel:messages," />
+																		<p:column selectionMode="single" headerText="X" style="width:32px;text-align:center"/>
+																	<p:column headerText="SÁBADO">
+																		<p:cellEditor>
+																			<f:facet name="output">#{exercicio.nome} - #{exercicio.descricao}</f:facet>
+																			<f:facet name="input">
+																				<p:inputText value="#{exercicio.nome}"
+																					placeholder="NOME" />
+																				<p:inputText value="#{exercicio.descricao}"
+																					placeholder="DESCRIÇÃO" />
+																			</f:facet>
+																		</p:cellEditor>
+																	</p:column>
+																	<f:facet name="footer">
+																		<p:commandButton value="+ adicionar"
+																			onclick="PF('dlgNovoExercicio').show()">
+																			<f:setPropertyActionListener
+																				target="#{treinamentosBean.diaNovoExercicio}"
+																				value="SABADO" />
+																		</p:commandButton>
+																						<br/> <br/>
+																		<p:commandButton value="- remover" action="#{treinamentosBean.excluirExercicioSabado}" update="tblSabado" oncomplete="trainingPanel.xhtml?faces-redirect=true"/>
+																	</f:facet>
+																</p:dataTable>
+															</div>
+
+
+														</div>
+													</div>
+													<br />
+														
+													<br />
+												</p:rowExpansion>
+
+											</p:dataTable>
+										</div>
+									</div>
+
+								</h:form>
+
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered">
+							<p:dialog header="NOVO EXERCÍCIO" modal="true"
+								widgetVar="dlgNovoExercicio" id="dlgNovoExercicio"
+								fitViewport="true" closeOnEscape="true" showEffect="fade"
+								hideEffect="fade">
+								<p:panel>
+									<h:form id="frmNovoExercicio">
+									Nome * <br />
+										<p:inputText id="inputNome"
+											value="#{treinamentosBean.novoExercicio.nome}"
+											required="true" requiredMessage="Dê um nome para o exercício" />
+										<br />
+									Descrição *<br />
+										<p:inputText id="inputDescricao"
+											value="#{treinamentosBean.novoExercicio.descricao}"
+											required="true"
+											requiredMessage="Dê uma descrição para o exercício" />
+
+										<div class="divider" />
+										<br />
+										<br />
+										<p:commandButton value="CRIAR"
+											action="#{treinamentosBean.criarExercicio}" oncomplete="trainingPanel.xhtml?faces-redirect=true"
+											update=":#{p:component('tblDomingo')} :#{p:component('tblSegunda')} :#{p:component('tblTerca')} :#{p:component('tblQuarta')} :#{p:component('tblQuinta')} :#{p:component('tblSexta')} :#{p:component('tblSabado')} :#{p:component('messages')}" />
+
+										<p:commandButton value="LIMPAR"
+											action="#{treinamentosBean.limparCampos}" />
+									</h:form>
+								</p:panel>
+							</p:dialog>
+						</div>
+					</fieldset>
+				</p:panel>
+			</p:tab>
+		</p:accordionPanel> 
+		</section>
+	</ui:define>
+
+</ui:composition>
+
+</html>

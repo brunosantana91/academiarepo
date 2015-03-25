@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+		<h:outputStylesheet library="bootstrap/css" name="registerUserSuccess.css" />
+	</ui:define>
+	
+	<ui:define name="conteudo">
+	<a id="scrollHere"/>
+		<section>
+		
+			<div class="row">
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<div class="page-header">
+						<h2 id="sucesso">SUCESSO !<small> novo usuário cadastrado</small></h2>
+					</div>
+				</div>
+			</div>
+			
+			<fieldset>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<p>Cadastro de usuário efetuado com sucesso, qual o próximo passo ?</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 col-centered">
+							<h:form>
+
+								<p:commandLink value="INICIAL" ajax="false"  action="/public/home.xhtml?faces-redirect=true" styleClass="btn btn-lg"/>
+								<div class="divider" />
+								<p:commandLink value="MATRICULA - FAZER!" styleClass="btn btn-lg"
+									actionListener="#{jsfUtils.redirectComScrollPorTag}">
+									<f:param name="pagina" value="../admin/registerModality.xhtml" />
+									<f:param name="idTag" value="scrollHere" />
+								</p:commandLink>
+								<div class="divider"/>
+								<p:commandLink value="NOVO USUÁRIO" styleClass="btn btn-lg"
+									actionListener="#{jsfUtils.redirectComScrollPorTag}">
+									<f:param name="pagina" value="../admin/registerUser.xhtml" />
+									<f:param name="idTag" value="scrollHere" />
+								</p:commandLink>
+							</h:form>
+						</div>
+				</div>
+			</fieldset>
+		</section>
+	</ui:define>
+
+</ui:composition>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+		<h:outputStylesheet library="bootstrap/css"
+			name="registerModality.css" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<a id="scrollHere" />
+		<section>
+
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<div class="page-header">
+					<h2>CADASTRO DE MODALIDADE</h2>
+				</div>
+			</div>
+		</div>
+
+		<fieldset>
+			<div class="row">
+
+				<h:form id="frmCadastrarModalidade">
+					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-centered">
+
+						<f:event type="postValidate"
+							listener="#{cadastroModalidadeBean.postValidate}" />
+						<div class="row">
+							<div class="form-group">
+								Nome *
+								<p:inputText id="inputNome"
+									value="#{cadastroModalidadeBean.modalidade.nome}"
+									styleClass="form-control input-md"
+									validatorMessage="min 4, máx 32">
+									<f:validateLength minimum="4" maximum="32" />
+									<f:validator binding="#{modalidadeEmUsoValidator}" />
+									<f:ajax event="blur" render="msgInputNome" />
+								</p:inputText>
+								<h:message id="msgInputNome" for="inputNome"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Preço (mensalidade)*
+								<p:inputText id="inputPreco"
+									value="#{cadastroModalidadeBean.opcao1.preco}"
+									styleClass="form-control input-md"
+									required="true" requiredMessage="preço inválido"
+									converterMessage="preço inválido"
+									validatorMessage="preço inválido" pt:placeholder="R$">
+									<f:convertNumber minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" maxIntegerDigits="4" type="currency" currencySymbol="R$" locale="pt_BR" pattern="###0,00"/>          
+									<f:validateDoubleRange minimum="00.10" maximum="1000.00" />
+									<f:ajax event="blur" render="msgInputPreco" />
+								</p:inputText>
+								<h:message id="msgInputPreco" for="inputPreco"
+									styleClass="messages" />
+							</div>
+							<div class="form-group">
+								Dias da semana
+								<p:selectManyMenu
+									value="#{cadastroModalidadeBean.opcao1.diasSemana}"
+									id="inputDias" required="true"
+									requiredMessage="selecione ao menos um"
+									converter="omnifaces.GenericEnumConverter">
+									<f:selectItems value="#{cadastroModalidadeBean.diasDaSemana}"
+										var="dia" itemValue="#{dia}" itemLabel="#{dia.valor}" />
+								</p:selectManyMenu>
+								<h:message id="msgInputDias" for="inputDias"
+									styleClass="messages" />
+							</div>
+
+						</div>
+
+
+
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<p:panel header="dias e preços - mais opções" toggleable="true"
+								toggleSpeed="500" closeSpeed="500" widgetVar="panelMaisOpcoes"
+								collapsed="#{cadastroModalidadeBean.panelMaisOpcoesCollapsed}">
+
+								<p:ajax event="toggle"
+									listener="#{cadastroModalidadeBean.onPanelMaisOpcoesToggle}"
+									update="inputPreco2 inputDias2" />
+
+								<div
+									class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2 col-centered">
+									<br /> Preço (mensalidade)*
+									<p:inputText id="inputPreco2"
+										value="#{cadastroModalidadeBean.opcao2.preco}"
+										styleClass="form-control input-md"
+										required="true" requiredMessage="preço inválido"
+										converterMessage="preço inválido"
+										validatorMessage="preço inválido"
+										disabled="#{cadastroModalidadeBean.disableMaisOpcoes}" pt:placeholder="R$">
+										<f:convertNumber minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" maxIntegerDigits="4" type="currency" currencySymbol="R$" locale="pt_BR" pattern="###0,00"/>
+										<f:validateDoubleRange minimum="00.10" maximum="1000.00" />
+										<f:ajax event="blur" render="msgInputPreco2" />
+									</p:inputText>
+									<h:message id="msgInputPreco2" for="inputPreco2"
+										styleClass="messages" />
+								</div>
+								<div
+									class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2 col-centered">
+									<br /> Dias da semana
+									<p:selectManyMenu
+										value="#{cadastroModalidadeBean.opcao2.diasSemana}"
+										id="inputDias2" required="true"
+										requiredMessage="selecione ao menos um"
+										converter="omnifaces.GenericEnumConverter"
+										disabled="#{cadastroModalidadeBean.disableMaisOpcoes}">
+										<f:selectItems value="#{cadastroModalidadeBean.diasDaSemana}"
+											var="dia" itemValue="#{dia}" itemLabel="#{dia.valor}" />
+									</p:selectManyMenu>
+									<h:message id="msgInputDias2" for="inputDias2"
+										styleClass="messages" />
+								</div>
+								<br />
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<p:panel header="mais +" toggleable="true" toggleSpeed="500"
+											closeSpeed="500" widgetVar="panelMaisOpcoes2"
+											collapsed="#{cadastroModalidadeBean.panelMaisOpcoes2Collapsed}">
+
+											<p:ajax event="toggle"
+												listener="#{cadastroModalidadeBean.onPanelMaisOpcoes2Toggle}"
+												update="inputPreco3 inputDias3" />
+
+											<div
+												class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2 col-centered">
+												<br /> Preço (mensalidade)*
+												<p:inputText id="inputPreco3"
+													value="#{cadastroModalidadeBean.opcao3.preco}"
+													required="true" requiredMessage="preço inválido"
+													styleClass="form-control input-md"
+													converterMessage="preço inválido"
+													validatorMessage="preço inválido"
+													disabled="#{cadastroModalidadeBean.disableMaisOpcoes2}" pt:placeholder="R$">
+													<f:convertNumber minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" maxIntegerDigits="4" type="currency" currencySymbol="R$" locale="pt_BR" pattern="###0,00"/>
+													<f:validateDoubleRange minimum="00.10" maximum="1000.00" />
+													<f:ajax event="blur" render="msgInputPreco3" />
+												</p:inputText>
+												<h:message id="msgInputPreco3" for="inputPreco3"
+													styleClass="messages" />
+											</div>
+											<div
+												class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2 col-centered">
+												<br /> Dias da semana
+												<p:selectManyMenu
+													value="#{cadastroModalidadeBean.opcao3.diasSemana}"
+													id="inputDias3" required="true"
+													requiredMessage="selecione ao menos um"
+													converter="omnifaces.GenericEnumConverter"
+													disabled="#{cadastroModalidadeBean.disableMaisOpcoes2}">
+													<f:selectItems
+														value="#{cadastroModalidadeBean.diasDaSemana}" var="dia"
+														itemValue="#{dia}" itemLabel="#{dia.valor}" />
+												</p:selectManyMenu>
+												<h:message id="msgInputDias3" for="inputDias3"
+													styleClass="messages" />
+											</div>
+
+										</p:panel>
+									</div>
+								</div>
+
+							</p:panel>
+						</div>
+					</div>
+					<br />
+
+					<br />
+					<div class="row">
+
+						<div class="col-xs-12 text-center">
+							<h:commandButton id="btnConfirma"
+								action="#{cadastroModalidadeBean.cadastrar}"
+								styleClass="btn btn-default btn-lg" value="CADASTRAR" />
+						</div>
+					</div>
+				</h:form>
+			</div>
+
+		</fieldset>
+		</section>
+	</ui:define>
+
+</ui:composition>
+
+</html>

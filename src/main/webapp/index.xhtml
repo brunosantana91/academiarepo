@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet library="bootstrap/css" name="bootstrap.css" />
+	<h:outputStylesheet library="bootstrap/css" name="fontes-externas.css" />
+	<h:outputStylesheet library="bootstrap/css" name="_template.css" />
+	<h:outputStylesheet library="bootstrap/css" name="index.css" />
+</h:head>
+
+
+<h:body>
+	<div class="container">
+		<header>
+		<div class="row">
+			<h1>
+				GYMMy <small>1.0</small>
+			</h1>
+		</div>
+		</header>
+
+		<section>
+		<div class="row">
+			<fieldset style="border: 1px solid black;">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered">
+
+					<h:form id="formLogin">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered">
+								<div class="form-group">
+									<p:outputLabel value="LOGIN" styleClass="h3" />
+									<div class="divider" />
+									<p:inputText id="inputLogin" styleClass="form-group input-sm" value="#{loginBean.login}"/>
+									<h:message for="inputLogin" styleClass="messages"/>
+								</div>
+								<div class="form-group">
+									<p:outputLabel value="SENHA" styleClass="h3" />
+									<div class="divider" />
+									<p:password id="inputSenha" styleClass="form-group input-sm" value="#{loginBean.senha}"/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered">
+								<p:commandButton value="entrar" ajax="false" action="#{loginBean.fazerLogin}"/>
+
+								<p:commandButton value="limpar" action="#{loginBean.limparCampos}" update="inputLogin inputSenha"/>
+							</div>
+						</div>
+						<br />
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered">
+								<p:commandLink>esqueceu a senha ?</p:commandLink>
+							</div>
+						</div>
+					</h:form>
+
+				</div>
+			</fieldset>
+		</div>
+		</section>
+
+		<br />
+
+		<footer>
+		<div style="text-align: center" id="rodape">copyright 2015 -
+			GYMMy RnRMachine software</div>
+		</footer>
+	</div>
+</h:body>
+
+
+</html>

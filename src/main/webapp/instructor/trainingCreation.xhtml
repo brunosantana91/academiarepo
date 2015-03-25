@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/_template.xhtml">
+	<ui:define name="cssImports">
+
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<a id="scrollHere" />
+		<section>
+
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<div class="page-header">
+					<h2>NOVO TREINO - SELECIONE .......</h2>
+				</div>
+			</div>
+		</div>
+
+		<fieldset>
+			<h:form id="frmMatricula">
+			<h:messages styleClass="messages"/>
+				<div class="row">
+
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 div-border">
+						<h4>Selecione o(s) (s)</h4>
+						<p:autoComplete id="autoModalidade" multiple="true"
+							value="#{matriculaBean.modalidadesSelecionadas}"
+							completeMethod="#{matriculaBean.completeModalidade}"
+							var="modalidade" itemLabel="#{modalidade.nome}"
+							itemValue="#{modalidade}" styleClass="autocomplete"
+							forceSelection="true">
+							<f:converter binding="#{modalidadeConverter}" />
+							<p:ajax event="itemSelect" update="modSelecionadas" />
+							<p:ajax event="itemUnselect" update="modSelecionadas" />
+							<p:column style="width:10%">
+								<h:outputText value="#{modalidade.nome}" />
+							</p:column>
+						</p:autoComplete>
+					</div>
+		</div>
+			
+			</h:form>
+		</fieldset>
+		</section>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

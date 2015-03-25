@@ -1,0 +1,17 @@
+@media screen and (max-width:600px){
+#dlgConfirmaMatricula{
+	position: absolute !important;
+	left:0px !important;
+}
+}
+
+span.ui-icon.ui-confirm-dialog-severity{
+	display: none;
+}
+
+.messages{
+	font-family: 'Raleway';
+	color: red;
+	font-weight: bold;
+	list-style: none;
+}
