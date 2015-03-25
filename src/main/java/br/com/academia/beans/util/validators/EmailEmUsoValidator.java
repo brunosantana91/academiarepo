@@ -24,7 +24,7 @@ public class EmailEmUsoValidator implements Validator {
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 	
 		if(servicoPerfil.buscarPerfilPorEmail(value.toString()) != null){
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputEmail"), "E-mail j� cadastrado, tente outro");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputEmail"), "E-mail j cadastrado, tente outro");
 		}
 		
 	}

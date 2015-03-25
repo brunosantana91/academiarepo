@@ -24,7 +24,7 @@ public class CpfEmUsoValidator implements Validator{
 
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		if(servicoPerfil.buscarPerfilPorCpf(value.toString()) != null){
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputCpf"), "CPF j� cadastrado, tente outro");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputCpf"), "CPF j cadastrado, tente outro");
 		}
 		
 	}

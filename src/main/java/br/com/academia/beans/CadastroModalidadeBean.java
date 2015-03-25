@@ -66,7 +66,7 @@ public class CadastroModalidadeBean {
 		} catch (ParametroEmUsoException e) {
 			MensagensDeNotificacao.criaMensagemDeNotificacaoINFO(
 					jsfUtils.buscaComponentePorId("inputNome"),
-					"Modalidade já cadastrada, tente outra");
+					"Modalidade j cadastrada, tente outra");
 			e.printStackTrace();
 		}
 

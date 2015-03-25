@@ -36,7 +36,7 @@ public class UploadArquivo {
 		}
 	}
 
-	// busca caminho completo da aplicação no servidor
+	// busca caminho completo da aplicao no servidor
 /*	private String getRealPath() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ServletContext context = (ServletContext) facesContext.getExternalContext().getContext();

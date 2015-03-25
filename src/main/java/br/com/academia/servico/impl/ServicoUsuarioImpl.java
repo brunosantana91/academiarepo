@@ -50,7 +50,7 @@ public class ServicoUsuarioImpl implements ServicoUsuario{
 		criptografaSenha(usuario);
 		dao.adicionar(usuario);
 		}else{
-			throw new ParametroEmUsoException("usuário já existe no banco de dados");
+			throw new ParametroEmUsoException("usurio j existe no banco de dados");
 		}
 	}
 	

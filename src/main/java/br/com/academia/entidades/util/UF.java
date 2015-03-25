@@ -2,10 +2,10 @@ package br.com.academia.entidades.util;
 
 public enum UF {
 
-	AC("Acre"), AL("Alagoas"), AP("Amapá"), AM("Amazonas"), BA("Bahia"), CE("Ceará"), DF("Distrito Federal"),
-	ES("Espírito Santo"), GO("Goiás"), MA("Maranhão"), MT("Mato Grosso"), MS("Mato Grosso do Sul"), MG("Minas Gerais"),
-	PA("Pará"), PB("Paraíba"), PR("Paraná"), PE("Pernambuco"), PI("Piauí"), RJ("Rio de Janeiro"), RN("Rio Grande do Norte"),
-	RS("Rio Grande do Sul"), RO("Rondônia"), RR("Roraima"), SC("Santa Catarina"), SP("São Paulo"), SE("Sergipe"), TO("Tocantins");
+	AC("Acre"), AL("Alagoas"), AP("Amap"), AM("Amazonas"), BA("Bahia"), CE("Cear"), DF("Distrito Federal"),
+	ES("Esprito Santo"), GO("Gois"), MA("Maranho"), MT("Mato Grosso"), MS("Mato Grosso do Sul"), MG("Minas Gerais"),
+	PA("Par"), PB("Paraba"), PR("Paran"), PE("Pernambuco"), PI("Piau"), RJ("Rio de Janeiro"), RN("Rio Grande do Norte"),
+	RS("Rio Grande do Sul"), RO("Rondnia"), RR("Roraima"), SC("Santa Catarina"), SP("So Paulo"), SE("Sergipe"), TO("Tocantins");
 	
 	
 	

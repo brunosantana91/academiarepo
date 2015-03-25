@@ -97,7 +97,7 @@ public class TreinamentosBean {
 			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR("Algo de errado aconteceu, por favor tente novamente");
 			e.printStackTrace();
 		}
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Novo exercício adicionado com sucesso");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Novo exerccio adicionado com sucesso");
 	
 		novoExercicio = new Exercicio();
 	}
@@ -109,37 +109,37 @@ public class TreinamentosBean {
 	//excluir ex dia especifico---------------------------------------------------------------------
 	public void excluirExercicioDomingo(){
 		servicoExercicio.remover(exercicioExcluirDomingo);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	public void excluirExercicioSegunda(){
 		servicoExercicio.remover(exercicioExcluirSegunda);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	public void excluirExercicioTerca(){
 		servicoExercicio.remover(exercicioExcluirTerca);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	public void excluirExercicioQuarta(){
 		servicoExercicio.remover(exercicioExcluirQuarta);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	public void excluirExercicioQuinta(){
 		servicoExercicio.remover(exercicioExcluirQuinta);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	public void excluirExercicioSexta(){
 		servicoExercicio.remover(exercicioExcluirSexta);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	public void excluirExercicioSabado(){
 		servicoExercicio.remover(exercicioExcluirSabado);
-		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exercício excluído");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Exerccio excludo");
 	}
 	
 	
@@ -163,7 +163,7 @@ public class TreinamentosBean {
 	
     public void onCellEditNomeTreino(CellEditEvent event) throws IOException {
     	FacesContext context = FacesContext.getCurrentInstance();
-    	//busca através do evento a rowKey, nesse caso passei o objeto inteiro como rowKey, foi a unica maneira de saber qual bean estava editando
+    	//busca atravs do evento a rowKey, nesse caso passei o objeto inteiro como rowKey, foi a unica maneira de saber qual bean estava editando
     	DataTable dataTable = (DataTable) event.getSource();
     	treinoEscolhido = (Treino) dataTable.getRowData();
     	Object oldValue = event.getOldValue();
@@ -172,7 +172,7 @@ public class TreinamentosBean {
         if(newValue == ""){
         
         	servicoTreino.remover(treinoEscolhido);
-        	 MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Treino: " + oldValue + " excluído");
+        	 MensagensDeNotificacao.criaMensagemDeNotificacaoINFO("Treino: " + oldValue + " excludo");
         	 context.getExternalContext().getFlash().setKeepMessages(true);
  			context.getExternalContext().redirect("trainingPanel.xhtml");
         }

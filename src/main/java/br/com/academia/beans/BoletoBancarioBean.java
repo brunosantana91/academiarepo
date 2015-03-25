@@ -33,11 +33,11 @@ public class BoletoBancarioBean {
 		
 		//datas do boleto
 		boletoBancario.setDatas(Datas.novasDatas().comDocumento(1, 5, 2015).comProcessamento(1, 5, 2015).comVencimento(2, 5, 2015));
-		//endereço do beneficiario
+		//endereo do beneficiario
 		boletoBancario.setEnderecoBeneficiario(Endereco.novoEndereco().comLogradouro("Rua testando boleto stella caelum").comBairro("GYMMy bairro").comCep("11234-030").comCep("GYMMy cidade").comUf("SP"));
 		//beneficiario
 		boletoBancario.setBeneficiario(Beneficiario.novoBeneficiario().comNomeBeneficiario("GYMMy").comAgencia("0001").comDigitoAgencia("1").comCodigoBeneficiario("500000").comDigitoCodigoBeneficiario("4").comNumeroConvenio("1234567").comCarteira("18").comEndereco(boletoBancario.getEnderecoBeneficiario()).comNossoNumero("123456789012"));
-		//endereço do pagador
+		//endereo do pagador
 		boletoBancario.setEnderecoPagador(Endereco.novoEndereco().comLogradouro("Rua pagador testando boleto stella caelum").comBairro("Pagador bairro").comCep("12345-123").comCep("boletos city").comUf("SP"));
 		//pagador
 		boletoBancario.setPagador(Pagador.novoPagador().comNome("Fulano da Silva").comDocumento("123.456.789-12").comEndereco(boletoBancario.getEnderecoPagador()));
@@ -49,7 +49,7 @@ public class BoletoBancarioBean {
 		
 
 		
-		Boleto boleto = Boleto.novoBoleto().comBanco(boletoBancario.getBanco()).comDatas(boletoBancario.getDatas()).comBeneficiario(boletoBancario.getBeneficiario()).comPagador(boletoBancario.getPagador()).comValorBoleto("100.0").comNumeroDoDocumento("1234").comInstrucoes("Pagável em qualquer agência bancária", "Após vencimento acréscimo de 1000 reais").comLocaisDePagamento("Rua Santander 1", "Caixa Economica 2");
+		Boleto boleto = Boleto.novoBoleto().comBanco(boletoBancario.getBanco()).comDatas(boletoBancario.getDatas()).comBeneficiario(boletoBancario.getBeneficiario()).comPagador(boletoBancario.getPagador()).comValorBoleto("100.0").comNumeroDoDocumento("1234").comInstrucoes("Pagvel em qualquer agncia bancria", "Aps vencimento acrscimo de 1000 reais").comLocaisDePagamento("Rua Santander 1", "Caixa Economica 2");
 		
 		GeradorDeBoletoHTML gerador = new GeradorDeBoletoHTML(boleto);
 		HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();

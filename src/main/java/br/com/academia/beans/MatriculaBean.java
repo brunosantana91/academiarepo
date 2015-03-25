@@ -76,7 +76,7 @@ public class MatriculaBean {
 		Faces.redirect("../academia/admin/matriculateTab.xhtml");
 	}
 
-	//recupera os dados passados pelo flash através de um evento preRenderView na página
+	//recupera os dados passados pelo flash atravs de um evento preRenderView na pgina
 	public void buscaDadosMatricula(){
 		this.modalidadeEscolhida = Faces.getFlashAttribute("modalidadeEscolhida");	
 		this.opcaoEscolhida = Faces.getFlashAttribute("opcaoEscolhida");	
@@ -90,7 +90,7 @@ public class MatriculaBean {
 		} catch (ParametroEmUsoException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR("ERRO! matrícula duplicada, favor verificar");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR("ERRO! matrcula duplicada, favor verificar");
 			context.getExternalContext().redirect("../admin/matriculate.xhtml#scrollHere");
 			e.printStackTrace();
 		}

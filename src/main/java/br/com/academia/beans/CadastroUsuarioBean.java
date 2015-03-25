@@ -85,7 +85,7 @@ public class CadastroUsuarioBean {
 		try {
 			servicoUsuario.adicionar(usuario);
 		} catch (ParametroEmUsoException e) {
-			MensagensDeNotificacao.criaMensagemDeNotificacaoINFO(jsfUtils.buscaComponentePorId("inputNome"), "ERRO: usuário duplicado");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoINFO(jsfUtils.buscaComponentePorId("inputNome"), "ERRO: usurio duplicado");
 			e.printStackTrace();
 		}
 		try {

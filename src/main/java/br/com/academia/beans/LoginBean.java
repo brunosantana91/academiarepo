@@ -45,7 +45,7 @@ public class LoginBean {
 	}
 
 	private void mensagemErroLogin() {
-		MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputLogin"), "login/senha inválidos");
+		MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputLogin"), "login/senha invlidos");
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 	}

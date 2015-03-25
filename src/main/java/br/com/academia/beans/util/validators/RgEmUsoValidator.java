@@ -24,7 +24,7 @@ public class RgEmUsoValidator implements Validator {
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 	
 		if(servicoPerfil.buscarPerfilPorRg(value.toString()) != null){
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputRg"), "RG j� cadastrado, tente outro");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputRg"), "RG j cadastrado, tente outro");
 		}
 		
 	}

@@ -61,7 +61,7 @@ public class ServicoPerfilImpl implements ServicoPerfil {
 		if(dao.buscarPerfilPorCpf(perfil.getCpf()) == null){
 		dao.adicionar(perfil);
 		}else{
-			throw new ParametroEmUsoException("perfil já existente no banco de dados");
+			throw new ParametroEmUsoException("perfil j existente no banco de dados");
 		}
 	}
 	

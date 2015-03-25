@@ -39,12 +39,12 @@ public class FiltroAutenticacao implements Filter {
 			return;
 		}
 		
-		//verifica autorização de admin--------------------------------------------------------//
+		//verifica autorizao de admin--------------------------------------------------------//
 		String requestPathAdmin = ((HttpServletRequest)request).getRequestURI().toLowerCase();
 		System.out.println("URI: "+requestPathAdmin);
 		
 		List<Permissoes> permissoes = loginBean.getUsuarioLogado().getPermissoes();
-		//verificado por ausencia de permissão
+		//verificado por ausencia de permisso
 		if(requestPathAdmin.contains("/admin/") && !permissoes.contains(Permissoes.ADMIN)){
 			((HttpServletResponse)response).sendRedirect("/academia/noAccess.xhtml");
 			return;
@@ -52,12 +52,12 @@ public class FiltroAutenticacao implements Filter {
 		
 		//-----------------------------------------------------------------------------------//
 		
-		//verifica autorização de instrutor--------------------------------------------------//
+		//verifica autorizao de instrutor--------------------------------------------------//
 		String requestPathInstrutor = ((HttpServletRequest)request).getRequestURI().toLowerCase();
 		System.out.println("URI: "+requestPathAdmin);
 		
 
-		//verificado por ausencia de permissão
+		//verificado por ausencia de permisso
 		if(requestPathInstrutor.contains("/instructor/") && !permissoes.contains(Permissoes.INSTRUTOR)){
 			((HttpServletResponse)response).sendRedirect("/academia/noAccess.xhtml");
 			return;
@@ -70,7 +70,7 @@ public class FiltroAutenticacao implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
 
-		//código de inicialização do filtro para o Spring ser capaz de injetar @Autowire beans Spring
+		//cdigo de inicializao do filtro para o Spring ser capaz de injetar @Autowire beans Spring
 		//ServletContext servletContext = fConfig.getServletContext();
 	/*	 ServletContext servletContext = fConfig.getServletContext();
 		    WebApplicationContext webApplicationContext = 

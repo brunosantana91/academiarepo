@@ -18,7 +18,7 @@ public class MatriculaValidator {
 	
 	public void valida(Matricula matricula) throws ParametroEmUsoException{
 			
-		if(servico.buscarMatriculaPorPerfilEModalidade(matricula.getPerfil(), matricula.getModalidade()) != null){throw new ParametroEmUsoException("matrícula já realizada, favor verificar");}
+		if(servico.buscarMatriculaPorPerfilEModalidade(matricula.getPerfil(), matricula.getModalidade()) != null){throw new ParametroEmUsoException("matrcula j realizada, favor verificar");}
 	
 }
 
