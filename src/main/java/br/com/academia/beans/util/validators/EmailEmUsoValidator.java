@@ -21,11 +21,10 @@ public class EmailEmUsoValidator implements Validator {
 	@Autowired
 	private ServicoPerfil servicoPerfil;
 
-	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 	
 		if(servicoPerfil.buscarPerfilPorEmail(value.toString()) != null){
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputEmail"), "E-mail já cadastrado, tente outro");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputEmail"), "E-mail jï¿½ cadastrado, tente outro");
 		}
 		
 	}

@@ -21,11 +21,10 @@ public class RgEmUsoValidator implements Validator {
 	@Autowired
 	private ServicoPerfil servicoPerfil;
 
-	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 	
 		if(servicoPerfil.buscarPerfilPorRg(value.toString()) != null){
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputRg"), "RG já cadastrado, tente outro");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputRg"), "RG jï¿½ cadastrado, tente outro");
 		}
 		
 	}

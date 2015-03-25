@@ -18,7 +18,6 @@ public class ModalidadeConverter implements Converter {
 	@Autowired
 	private ServicoModalidade servico;
 
-	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String string) {
 		if (string == null || string.isEmpty())
@@ -28,7 +27,6 @@ public class ModalidadeConverter implements Converter {
 		return m;
 	}
 
-	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object object) {
 		Modalidade m = (Modalidade) object;

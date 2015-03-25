@@ -21,11 +21,10 @@ public class ModalidadeEmUsoValidator implements Validator {
 	@Autowired
 	private ServicoModalidade servicoModalidade;
 
-	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 	
 		if(servicoModalidade.buscarModalidadePorNome(value.toString()) != null){
-			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputNome"), "modalidade já cadastrada, tente outra");
+			MensagensDeNotificacao.criaMensagemDeNotificacaoERROR(jsfUtils.buscaComponentePorId("inputNome"), "modalidade jï¿½ cadastrada, tente outra");
 		}
 		
 	}

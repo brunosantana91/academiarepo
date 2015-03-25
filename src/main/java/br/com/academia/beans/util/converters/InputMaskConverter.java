@@ -22,7 +22,6 @@ public class InputMaskConverter implements Converter {
 		return value;
 	}
 
-	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
 		
